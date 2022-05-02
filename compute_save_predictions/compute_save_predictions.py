@@ -43,7 +43,8 @@ class ComputeSavePredictions:
     def get_evaluation_predictions(self):
         eval_set = pd.DataFrame(self.compute_predictions()[:, -1])
         sample_predictions_id = pd.read_csv('./sample_submission.csv').iloc[30490:, :1].reset_index()
-        combined_eval_df = pd.concat([sample_predictions_id, eval_set], axis=0)
+        combined_eval_df = pd.concat([sample_predictions_id, eval_set], axis=1).iloc[:, 1:]
+        
         combined_eval_df.columns = ['id', *[f'F{i}' for i in range(1,29)]]
         return combined_eval_df
 
